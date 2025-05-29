@@ -1,8 +1,10 @@
 # online-shop
 dự án web về website bán hàng thiết bị điện tử online
 
-cách cài đặt:
+![ERD Diagram](erd_diagram.png)
 
+
+cách cài đặt:
 
 1. tạo database và table như trong file db.sql
 1.1 Tạo file .env với các biến 
