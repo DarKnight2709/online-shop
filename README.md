@@ -1,7 +1,17 @@
 # online-shop
 dự án web về website bán hàng thiết bị điện tử online
 
-![ERD Diagram](erd_diagram.png)
+![ERD Diagram](/public/erd_diagram.png)
+
+
+Admin: adminID, username, passwordHash, email
+Order: orderID, orderDate, quantity, total, status, productID, userID,
+Product: productID, productName, description, price, quantityInStock, imageURL, brandID, categoryID
+User: userID, username, passwordHash, email, address, phone
+Cart: cartID, userID
+CartItem: cartItemID, quantity, price, cartID, productID
+Brand: brandID, name
+Category: categoryID, name
 
 
 cách cài đặt:
