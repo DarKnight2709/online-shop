@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const cors = require("cors");
+const apiRouter = require("./routes/apiRouter");
 
 
 const app = express(); // call express function()
@@ -30,6 +31,9 @@ app.use(express.urlencoded({extended: 'false'}));
 // JSON API calls (ex: fetch) (input: {"username":"abc"})
 app.use(express.json());
 app.use(cors());
+
+
+app.use('/api', apiRouter);
 
 
 
