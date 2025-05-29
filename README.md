@@ -18,11 +18,11 @@ cách cài đặt:
 
 1. tạo database và table như trong file db.sql
 1.1 Tạo file .env với các biến 
-  DATABASE = 
-  DATBASE_HOST = localhost
-  DATABASE_ROOT = root
-  DATABASE_USER = 
-  DATABASE_PASSWORD = 
+  - DATABASE = 
+  - DATBASE_HOST = localhost
+  - DATABASE_ROOT = root
+  - DATABASE_USER = 
+  - DATABASE_PASSWORD = 
 
 2. mở 2 terminal (1 cho client, 1 cho server)
 
