@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function Register() {
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPasswrod] = useState('');
@@ -16,10 +16,10 @@ function Register() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name,
+          username,
           email,
           password,
-          password_confirm: confirmPassword
+          confirmPassword,
         })
       });
       const result = await response.json();
@@ -36,14 +36,14 @@ function Register() {
     <div>
       <form action={handleSubmit}>
         <div>
-          <label htmlFor="fname" >
+          <label htmlFor="fusername" >
             Name:
           </label>
           <input
             type="text"
-            id="fname"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            id="fusername"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
             placeholder="Enter your name"
           />
