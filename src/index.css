@@ -1,13 +1,166 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+     font-family: "Montserrat", sans-serif;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: #5F41E4;
+}
+#root{
+    width: 100%;
+    padding: 0 0.6rem;
+}
+.login-container{
+    max-width: 410px;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+    padding: 2rem 1.5rem;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.social-login .social-button{
+    display: flex;
+    width: 100%;
+    gap: 0.81rem;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.75rem 0;
+    border-radius: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 1rem;
+    border: 1px solid #E0E0E0;
+    background: #F9F8FF;
+    transition: all 0.3s ease;
+}
+.social-login .social-button:hover{
+    border-color:#5F41E4;
+    background: #eeedf6;
+    transform: scale(1.05);
+}
+.social-login .social-button  .social-icon{
+    width: 23px;
+}
+.login-container .social-login{
+    display: flex;
+    gap: 1.31rem;
+}
+.login-container .form-title{
+    text-align: center;
+    font-size: 1.37rem;
+    font-weight: 600;
+    margin-bottom: 1.87rem;
+}
+.login-container .separator{
+    margin: 1.5rem 0;
+    text-align: center;
+    position: relative;
+}
+.login-container .separator::after{
+    position: absolute;
+    content: "";
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+    background: #bfb3f2;
+}
+.login-container .separator span{
+    position: relative;
+    z-index: 1;
+    padding: 0 0.5rem;
+    background: #ffffff;
+    font-size: 1.06rem;
+    font-weight: 500;
+}
+.login-form .input-wrapper{
+    margin-bottom: 1.5rem;
+    width: 100%;
+    height: 54px;
+    position: relative;
+}
+.login-form .input-wrapper .input-field{
+    height: 100%;
+    width: 100%;
+    border-radius: 0.31rem;
+    font-size: 1.06rem;
+    outline: none;
+    border: 1px solid #E0E0E0;
+    padding: 0 1.25rem 0 3.12rem;
+    transition: 0.2s ease;
+}   
+.login-form .input-wrapper .left-icon{
+   color: #a395e0;
+    position: absolute;
+    top: 50%;
+    left: 0.9rem;
+    transform: translateY(-50%);
+    z-index: 1;
+    pointer-events: none;
+    font-size: 1rem;
+}
+.login-form .input-wrapper .right-icon{
+    position:absolute;
+    top: 50%;
+    right: 0.9rem;
+    transform: translateY(-50%);
+    color: #a395e0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.login-form .input-wrapper .input-field::placeholder{
+    color:#a395e0;
+}
+.login-form .input-wrapper .input-field:focus ~ i{
+    color: #5F41E4;
+}
+.login-form .login-button{
+    width: 100%;
+    height: 54px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.125rem;
+    background:#5F41E4;
+    margin-top: 2.19rem;
+    border-radius: 0.31rem;
+    transition: 0.2s ease;
+}
+.login-form .login-button:hover{
+    background: #4b2dc0;
+}   
+.login-container .signup-text{
+    text-align: center;
+    font-weight: 500;
+    margin: 1.75rem 0 0.31rem;
+}
+.login-container a{
+    color: #5F41E4;
+    font-weight: 500;
+    text-decoration: none;
+}
+.login-container a:hover{
+    text-decoration: underline;
+}
+.login-form .forgot-pass-link{
+    display: block;
+    width: fit-content;
+    margin-top: -0.46rem;
+}
+.login-form .input-wrapper .input-error{
+    border-color: #e74c3c;
+}
+.login-form .input-wrapper .error-text{
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
 }
