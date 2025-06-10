@@ -98,7 +98,6 @@ exports.addNewProduct = async (req, res, next) => {
       throwError("Database connection error", 500);
     }
     return res.status(201).json({
-      message: "Product added successfully",
       product: newProduct.rows[0]
     })
 
@@ -114,7 +113,9 @@ exports.addNewProduct = async (req, res, next) => {
 
 // get sinlge product
 exports.getSingleProduct = async (req, res) => {
-  return res.json(req.product);
+  return res.status(200).json({
+    product: req.product
+  });
 }
 
 
@@ -160,7 +161,6 @@ exports.editProduct = async (req, res, next) => {
       throwError("Database connection error", 500);
     }
     return res.status(201).json({
-      message: `Product with id ${req.product.productId} updated successfully`,
       product: updated.rows[0]
     })
 

@@ -49,10 +49,10 @@ Dự án web về website bán hàng thiết bị điện tử online
 - **URL:** http://localhost:5000/api/auth/login  
 
 **Response:**  
-- 200 OK – body: `{ message: "Login successful" }`  
-- 401 Unauthorized – body: `{ message: "Invalid username or password" }`  
-- 500 Internal Server Error – body: `{ message: "Internal Server Error" }` // Lỗi hệ thống chung  
-- 500 Internal Server Error – body: `{ message: "Login failed" }` // Lỗi khi lưu session hoặc đăng nhập  
+- 200 OK – body: `{ "message" : "Login successful" }`  
+- 401 Unauthorized – body: `{ "message" : "Invalid username or password" }`  
+- 500 Internal Server Error – body: `{ "message" : "Internal Server Error" }` // Lỗi hệ thống chung  
+- 500 Internal Server Error – body: `{ "message" : "Login failed" }` // Lỗi khi lưu session hoặc đăng nhập  
 
 ---
 
@@ -62,11 +62,11 @@ Dự án web về website bán hàng thiết bị điện tử online
 - **URL:** http://localhost:5000/api/auth/register  
 
 **Response:**  
-- 201 Created – body: `{ message: “User register successfully!” }`  
-- 400 Bad Request – body: `{ message: "This name is already in use" }`  
-- 400 Bad Request – body: `{ message: "This email is already in use" }`  
-- 400 Bad Request – body: `{ message: "Passwords do not match!" }`  
-- 500 Internal Server Error – body: `{ message: "Internal Server Error" }`  
+- 201 Created – body: `{ "message": “User register successfully!” }`  
+- 400 Bad Request – body: `{ "message": "This name is already in use" }`  
+- 400 Bad Request – body: `{ "message": "This email is already in use" }`  
+- 400 Bad Request – body: `{ "message": "Passwords do not match!" }`  
+- 500 Internal Server Error – body: `{ "message": "Internal Server Error" }`  
 
 ---
 
@@ -75,9 +75,70 @@ Dự án web về website bán hàng thiết bị điện tử online
 - **URL:** http://localhost:5000/api/auth/logout  
 
 **Response:**  
-- 200 OK – body: `{ message: "Logout successful." }`  
-- 400 Bad Request – body: `{ message: "Logout failed. User is still authenticated." }`  
-- 500 Internal Server Error – body: `{ message: "Internal Server Error" }` 
+- 200 OK – body: `{ "message": "Logout successful." }`  
+- 400 Bad Request – body: `{ "message": "Logout failed. User is still authenticated." }`  
+- 500 Internal Server Error – body: `{ "message": "Internal Server Error" }` 
+
+
+
+### Products APIs
+<!-- get all products -->
+- **Method:** GET
+- **URL:** http://localhost:5000/api/products  
+
+**Response:**  
+- 200 OK – body: `{ "products" : "[{}, {}]"}`  
+- 400 Bad Request – body: `{ "message": "No Products Found" }`  
+
+
+
+
+<!-- search products by keyword -->
+- **Method:** GET
+- **URL:** http://localhost:5000/api/products/search?searchTerm=".."
+
+**Response:**  
+ <!-- {productid, productname, description, price, quantityinstock, imageurl, brandid, categoryid} -->
+- 200 OK – body: `{ "products" : "[{}, {}]"}`  
+- 400 Bad Request – body: `{ "message" : "Search term is required" }`  
+
+
+<!-- get product by id -->
+- **Method:** GET
+- **URL:** http://localhost:5000/api/products/:productId
+
+**Response:**  
+- 200 OK – body: `{ "product" : "[{}]"}`  
+- 400 Bad Request – body: `{ "message": "Product Not Found" }`  
+
+
+<!-- add new product -->
+- **Method:** POST
+- **URL:** http://localhost:5000/api/products
+
+**Response:**  
+- 201 Created – body: `{ "product" : "[{}]"}`  
+- 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
+
+
+<!-- edit product -->
+- **Method:** POST
+- **URL:** http://localhost:5000/api/products/:productId
+
+**Response:**  
+- 201 Created – body: `{ "product" : "[{}]"}`  
+- 400 Bad Request – body: `{ "message": "Product Not Found" }`
+- 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
+
+
+<!-- delete product -->
+- **Method:** POST
+- **URL:** http://localhost:5000/api/products/:productId
+
+**Response:**  
+- 200 OK – body: `{ "product" : "[{}]"}`  
+- 400 Bad Request – body: `{ "message": "Product Not Found" }`
+- 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
 
 
 ## 💻 Công nghệ sử dụng
