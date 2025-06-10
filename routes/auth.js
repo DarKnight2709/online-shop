@@ -15,7 +15,7 @@ router.post('/register', register);
 
 router.post('/login', (req, res, next) => {
   // console.log(req.user); // lấy dữ liệu từ session (deserializeUser)
-  passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('user', (err, user, info) => {
     if (err) {
       return res.status(500).json({ message: 'Internal Server Error' });
     }
@@ -24,6 +24,25 @@ router.post('/login', (req, res, next) => {
     }
     // gọi serializeUser // lưu user vào session sau khi thanh công
     req.logIn(user, (err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Login failed'});
+      }
+      return res.status(200).json({  message: 'Login successful' });
+    });
+  })(req, res, next);
+});
+
+router.post('/admin', (req, res, next) => {
+  // console.log(req.user); // lấy dữ liệu từ session (deserializeUser)
+  passport.authenticate('admin', (err, admin, info) => {
+    if (err) {
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+    if (!admin) {
+      return res.status(401).json({ message: 'Invalid username or password' });
+    }
+    // gọi serializeUser // lưu user vào session sau khi thanh công
+    req.logIn(admin, (err) => {
       if (err) {
         return res.status(500).json({ message: 'Login failed' });
       }

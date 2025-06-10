@@ -2,19 +2,8 @@
 
 CREATE DATABASE onlineshop;
 
-
 -- ========================
--- 1. Bảng Admin
--- ========================
-CREATE TABLE Admin (
-    adminID SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    passwordHash TEXT NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE
-);
-
--- ========================
--- 2. Bảng User
+-- 1. Bảng User
 -- ========================
 CREATE TABLE Users (
     userID SERIAL PRIMARY KEY,
@@ -26,7 +15,7 @@ CREATE TABLE Users (
 );
 
 -- ========================
--- 3. Bảng Brand
+-- 2. Bảng Brand
 -- ========================
 CREATE TABLE Brands (
     brandID SERIAL PRIMARY KEY,
@@ -34,7 +23,7 @@ CREATE TABLE Brands (
 );
 
 -- ========================
--- 4. Bảng Category
+-- 3. Bảng Category
 -- ========================
 CREATE TABLE Category (
     categoryID SERIAL PRIMARY KEY,
@@ -42,7 +31,7 @@ CREATE TABLE Category (
 );
 
 -- ========================
--- 5. Bảng Product
+-- 4. Bảng Product
 -- ========================
 CREATE TABLE Products (
     productID SERIAL PRIMARY KEY,
@@ -56,7 +45,7 @@ CREATE TABLE Products (
 );
 
 -- ========================
--- 6. Bảng "Order"
+-- 5. Bảng "Order"
 -- ========================
 CREATE TABLE Orders (
     orderID SERIAL PRIMARY KEY,
@@ -69,7 +58,7 @@ CREATE TABLE Orders (
 );
 
 -- ========================
--- 7. Bảng Cart
+-- 6. Bảng Cart
 -- ========================
 CREATE TABLE Carts (
     cartID SERIAL PRIMARY KEY,
@@ -77,7 +66,7 @@ CREATE TABLE Carts (
 );
 
 -- ========================
--- 8. Bảng CartItem
+-- 7. Bảng CartItem
 -- ========================
 CREATE TABLE CartItems (
     cartItemID SERIAL PRIMARY KEY,

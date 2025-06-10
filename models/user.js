@@ -8,5 +8,5 @@ exports.findPasswordByUserName = async(username) => await pool.query("SELECT pas
 
 exports.findByEmail = async (email) => await pool.query("SELECT email FROM users WHERE email = $1", [email]);
 
-exports.addUserToDb = async (username, hashedPassword, email, phone) => await pool.query('INSERT INTO users(username, passwordhash, email, phone) VALUES($1, $2, $3, $4) RETURNING *', [username, hashedPassword, email, phone]);
+exports.addUserToDb = async (username, hashedPassword, email, phone) => await pool.query('INSERT INTO users(username, passwordhash, email, phone, role) VALUES($1, $2, $3, $4, $5) RETURNING *', [username, hashedPassword, email, phone, "user"]);
 

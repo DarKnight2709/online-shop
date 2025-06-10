@@ -7,9 +7,9 @@ const pool = require('./models/database');
 
 function initialize(passport) {
   // khai báo chiến lược đăng nhập (passport-local)
-  passport.use(new LocalStrategy(
+  passport.use('user',new LocalStrategy(
     async function (username, password, done) {
-      pool.query('SELECT * FROM users WHERE username=$1', [username], (err, user) => {
+      pool.query('SELECT * FROM users WHERE username=$1 AND role=$2', [username, "user"], (err, user) => {
         if(err) {return done(err);}
         if(user.rows.length === 0) {
           return done(null, false);
@@ -24,8 +24,28 @@ function initialize(passport) {
         }); 
       });
     }
-    
   ));
+
+
+  passport.use('admin',new LocalStrategy(
+    async function (username, password, done) {
+      pool.query('SELECT * FROM users WHERE username=$1 AND role=$2', [username, "admin"], (err, user) => {
+        if(err) {return done(err);}
+        if(user.rows.length === 0) {
+          return done(null, false);
+        }
+        // console.log('initialize');
+        bcrypt.compare(password, user.rows[0].passwordhash, (err, verified) => {
+          if(err) {return done(err);}
+          if(verified) {
+            return done(null, user.rows[0]);
+          }
+          return done(null, false);
+        }); 
+      });
+    }
+  ));
+
 
   // serialize user
   // định nghĩa cách lưu user vào session
