@@ -79,10 +79,11 @@ Dự án web về website bán hàng thiết bị điện tử online
 - 400 Bad Request – body: `{ "message": "Logout failed. User is still authenticated." }`  
 - 500 Internal Server Error – body: `{ "message": "Internal Server Error" }` 
 
+---
 
 
 ### Products APIs
-<!-- get all products -->
+* Get all products
 - **Method:** GET
 - **URL:** http://localhost:5000/api/products  
 
@@ -91,19 +92,21 @@ Dự án web về website bán hàng thiết bị điện tử online
 - 400 Bad Request – body: `{ "message": "No Products Found" }`  
 
 
+--
 
-
-<!-- search products by keyword -->
+* Search products by keyword
 - **Method:** GET
 - **URL:** http://localhost:5000/api/products/search?searchTerm=".."
 
 **Response:**  
- <!-- {productid, productname, description, price, quantityinstock, imageurl, brandid, categoryid} -->
+* NOTE: {productid, productname, description, price, quantityinstock, imageurl, brandid, categoryid}
 - 200 OK – body: `{ "products" : "[{}, {}]"}`  
 - 400 Bad Request – body: `{ "message" : "Search term is required" }`  
 
+--
 
-<!-- get product by id -->
+
+* Get product by id
 - **Method:** GET
 - **URL:** http://localhost:5000/api/products/:productId
 
@@ -111,8 +114,10 @@ Dự án web về website bán hàng thiết bị điện tử online
 - 200 OK – body: `{ "product" : "[{}]"}`  
 - 400 Bad Request – body: `{ "message": "Product Not Found" }`  
 
+--
 
-<!-- add new product -->
+
+* Add new product
 - **Method:** POST
 - **URL:** http://localhost:5000/api/products
 
@@ -120,8 +125,10 @@ Dự án web về website bán hàng thiết bị điện tử online
 - 201 Created – body: `{ "product" : "[{}]"}`  
 - 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
 
+--
 
-<!-- edit product -->
+
+* Edit product
 - **Method:** POST
 - **URL:** http://localhost:5000/api/products/:productId
 
@@ -130,8 +137,10 @@ Dự án web về website bán hàng thiết bị điện tử online
 - 400 Bad Request – body: `{ "message": "Product Not Found" }`
 - 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
 
+--
 
-<!-- delete product -->
+
+* Delete product
 - **Method:** POST
 - **URL:** http://localhost:5000/api/products/:productId
 

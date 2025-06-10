@@ -180,7 +180,6 @@ exports.deleteProduct = async (req, res, next) => {
       throwError("Database connection Error", 500);
     }
     return res.status(200).json({
-      message: `Product with id ${productId} deleted successfully`,
       product: deleted.rows[0],
     })
 
