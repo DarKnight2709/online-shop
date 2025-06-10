@@ -41,8 +41,21 @@ Dự án web về website bán hàng thiết bị điện tử online
 ---
 
 ## 📱 API
+### 🔐 Admin Login API
+- **Method:** POST  
+- **Body:** (username, password)  
+- **URL:** http://localhost:5000/api/auth/admin
 
-### 🔐 Login API
+**Response:**  
+- 200 OK – body: `{ "message" : "Login successful" }`  
+- 401 Unauthorized – body: `{ "message" : "Invalid username or password" }`  
+- 500 Internal Server Error – body: `{ "message" : "Internal Server Error" }` // Lỗi hệ thống chung  
+- 500 Internal Server Error – body: `{ "message" : "Login failed" }` // Lỗi khi lưu session hoặc đăng nhập  
+
+---
+
+
+### 🔐 User Login API
 - **Method:** POST  
 - **Body:** (username, password)  
 - **URL:** http://localhost:5000/api/auth/login  
