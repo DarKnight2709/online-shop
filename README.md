@@ -83,71 +83,69 @@ Dự án web về website bán hàng thiết bị điện tử online
 
 
 ### Products APIs
-* Get all products
+**Get all products**
 - **Method:** GET
 - **URL:** http://localhost:5000/api/products  
 
-**Response:**  
-- 200 OK – body: `{ "products" : "[{}, {}]"}`  
-- 400 Bad Request – body: `{ "message": "No Products Found" }`  
-
-
+- **Response:**  
+   - 200 OK – body: `{ "products" : "[{}, {}]"}`  
+   - 400 Bad Request – body: `{ "message": "No Products Found" }`  
 --
 
-* Search products by keyword
+**Search products by keyword**
 - **Method:** GET
 - **URL:** http://localhost:5000/api/products/search?searchTerm=".."
 
-**Response:**  
-* NOTE: {productid, productname, description, price, quantityinstock, imageurl, brandid, categoryid}
-- 200 OK – body: `{ "products" : "[{}, {}]"}`  
-- 400 Bad Request – body: `{ "message" : "Search term is required" }`  
+- **Response:**  
+   - NOTE: {productid, productname, description, price, quantityinstock, imageurl, brandid, categoryid}
+   - 200 OK – body: `{ "products" : "[{}, {}]"}`  
+   - 400 Bad Request – body: `{ "message" : "Search term is required" }`  
 
 --
 
 
-* Get product by id
+**Get product by id**
 - **Method:** GET
 - **URL:** http://localhost:5000/api/products/:productId
 
-**Response:**  
-- 200 OK – body: `{ "product" : "[{}]"}`  
-- 400 Bad Request – body: `{ "message": "Product Not Found" }`  
+- **Response:**  
+   - 200 OK – body: `{ "product" : "[{}]"}`  
+   - 400 Bad Request – body: `{ "message": "Product Not Found" }`  
 
 --
 
 
-* Add new product
+**Add new product**
 - **Method:** POST
 - **URL:** http://localhost:5000/api/products
 
-**Response:**  
-- 201 Created – body: `{ "product" : "[{}]"}`  
-- 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
+- **Response:**  
+   - 201 Created – body: `{ "product" : "[{}]"}`  
+   - 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
 
 --
 
 
-* Edit product
+**Edit product**
 - **Method:** POST
 - **URL:** http://localhost:5000/api/products/:productId
 
-**Response:**  
-- 201 Created – body: `{ "product" : "[{}]"}`  
-- 400 Bad Request – body: `{ "message": "Product Not Found" }`
-- 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
+-  **Response:**  
+   - 201 Created – body: `{ "product" : "[{}]"}`  
+   - 400 Bad Request – body: `{ "message": "Product Not Found" }`
+   - 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
 
 --
 
 
-* Delete product
+**Delete product**
 - **Method:** POST
 - **URL:** http://localhost:5000/api/products/:productId
 
-**Response:**  
-- 200 OK – body: `{ "product" : "[{}]"}`  
-- 400 Bad Request – body: `{ "message": "Product Not Found" }`
-- 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
+- **Response:**  
+   - 200 OK – body: `{ "product" : "[{}]"}`  
+   - 400 Bad Request – body: `{ "message": "Product Not Found" }`
+   - 500 Internal Server Error – body: `{ "message": "Database connection error" }` 
 
 
 ## 💻 Công nghệ sử dụng
@@ -155,9 +153,3 @@ Dự án web về website bán hàng thiết bị điện tử online
 - **Frontend**: ReactJS
 - **Backend**: Node.js, Express, PassportJS
 - **Database**: PostgreSQL
-
-Frontend: ReactJS
-
-Backend: Node.js, Express, PassportJS
-
-Database: PostgreSQL
