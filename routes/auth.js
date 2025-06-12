@@ -74,6 +74,17 @@ router.delete('/logout', (req, res, next) => {
 });
 
 
+// check if user is Authenticated and send user data
+router.get('/session', (req, res, next) => {
+    if(req.isAuthenticated()){
+        const user = req.session.passport.user;
+        return res.status(200).send({ user });
+    } 
+    return res.status(404).send();
+    
+})
+
+
 
 // router.get('/home', isLoggedIn, (req, res) => {
 //     return res.status(200).send({
@@ -81,6 +92,8 @@ router.delete('/logout', (req, res, next) => {
 //     });
     
 // });
+
+
 
 
 

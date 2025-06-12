@@ -22,7 +22,7 @@ app.use(express.static(publicDir));
 app.use(express.urlencoded({extended: 'false'}));
 // JSON API calls (ex: fetch) (input: {"username":"abc"})
 app.use(express.json());
-app.use(cors({ origin: true, credentials: true, methods: ['GET', 'POST'] }));
+app.use(cors({ origin: true, credentials: true, methods: ['GET', 'POST', 'DELETE', 'PUT'] }));
 
 
 
@@ -45,7 +45,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: false,
-      maxAge: 1000*60,
+      maxAge: 1000*60*60*24,
       sameSite: true
     }
   })
