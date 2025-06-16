@@ -71,7 +71,6 @@ CREATE TABLE Carts (
 CREATE TABLE CartItems (
     cartItemID SERIAL PRIMARY KEY,
     quantity INT NOT NULL,
-    price NUMERIC(10,2) NOT NULL,
     cartID INT REFERENCES Carts(cartID) ON DELETE CASCADE,
     productID INT REFERENCES Products(productID) ON DELETE CASCADE
 );

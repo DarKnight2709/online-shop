@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useDispatch} from 'react-redux';
+import { receiveCurrent } from '../../features/session/sessionSlice';
 
 const login = async (username, password) => {
   try {
@@ -51,6 +52,7 @@ function Login() {
 
     if (result.success) {
       console.log('Login successful');
+      dispatch(receiveCurrent());
       navigate('/');
     }
   };

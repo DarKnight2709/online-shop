@@ -78,8 +78,10 @@ router.delete('/logout', (req, res, next) => {
 router.get('/session', (req, res, next) => {
     if(req.isAuthenticated()){
         const user = req.session.passport.user;
+        console.log(user);
         return res.status(200).send({ user });
     } 
+    console.log("404");
     return res.status(404).send();
     
 })

@@ -68,7 +68,7 @@ function Register() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="fusername" className="form-label">Username</label>
               <input

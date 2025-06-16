@@ -5,7 +5,7 @@ const { findByEmail, findByUsername, findPasswordByUserName, addUserToDb } = req
 const { hashPassword, comparePassword} = require('../utils');
 
 exports.register = async (req, res) => {
-  const {username, email, phone, password, confirmPassword} = req.body;
+  const {username, email, phone, password, confirmPassword, address} = req.body;
   
 
   // db.query() code
@@ -42,12 +42,14 @@ exports.register = async (req, res) => {
     // if it is valid add it to the database (have to hash the password) and redirect user to register page to notify of successful registration
     let hashedPassword = await hashPassword(password);
     try {
-      const insertResult = await addUserToDb(username, hashedPassword, email, phone);
+      const insertResult = await addUserToDb({username, hashedPassword, email, phone, address});
       res.status(201).json({
         message: "User registered successfully!"
       })
     } catch (error) {
+      console.log('he')
       console.log(error.message);
+      console.log('ewrw')
       return res.status(500).json({
         message: "Internal Server Error"
       });

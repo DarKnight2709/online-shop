@@ -1,0 +1,5 @@
+.carousel-item img {
+  width: 100%;
+  height: 400px; /* hoặc chiều cao bạn muốn */
+  object-fit: cover; /* đảm bảo ảnh đầy khung mà không méo */
+}
