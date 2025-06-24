@@ -17,3 +17,55 @@
 .shop-main-menu a {
     color: #1e1e1e;
 }
+
+
+/* Main menu item */
+.nav-item {
+  position: relative;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Submenu styles */
+.has-submenu {
+  position: relative;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  padding: 0;
+}
+
+.has-submenu:hover > .submenu {
+  display: block;
+}
+
+/* Nested submenu (e.g., Laptops > Dell/Lenovo) */
+.submenu .has-submenu .submenu {
+  top: 0;
+  left: 100%;
+}
+
+.submenu-link {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  text-decoration: none;
+}
+
+.submenu-link:hover {
+  background-color: #f8f9fa;
+}

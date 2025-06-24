@@ -10,9 +10,10 @@ export const loadProducts = createAsyncThunk(
             let endpoint;
             switch(dataObj.type){
                 case 'category':
-                    if('catId' in dataObj){
+                    if('brandId' in dataObj && 'catId' in dataObj) {
+                        endpoint = `http://localhost:5000/api/category/${dataObj.catId}/${dataObj.brandId}`;
+                    } else if ('catId' in dataObj){
                         endpoint = `http://localhost:5000/api/category/${dataObj.catId}`;
-                        
                     }
                     break;
                 case 'search':

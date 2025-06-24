@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import './header.css';
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../../utils";
+import { fetchCategoriesWithBrands, logout } from "../../utils";
 import { logOutUser, selectUser } from "../../features/session/sessionSlice";
 import SearchBar from "./SearchBar/SearchBar";
 import { trim } from "validator";
@@ -13,6 +13,16 @@ export default function Header() {
     const user = useSelector(selectUser);
     const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+    const [categoryMenu, setCategoryMenu] = useState([]);
+
+    useEffect(() => {
+      const setMenu = async () => {
+        setCategoryMenu(await fetchCategoriesWithBrands());
+      }
+      setMenu();
+    }, []);
+
+    console.log(categoryMenu)
 
     //Handle LogOut, Clear State
     const handleLogout= async () =>{
@@ -56,18 +66,35 @@ export default function Header() {
                             <li className="nav-item">
                                 <Link className="nav-link" to='/shop'>Shop</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to='/account'>My Account</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to='/cart'>Cart</Link>
-                            </li>
+                            
                             <li className="nav-item">
                                 <Link className="nav-link" to='/checkout'>Checkout</Link>
                             </li> 
-                            <li className="nav-item">
-                                <Link className="nav-link" to='/shop/category/4/electronics'>Electronics</Link>
-                            </li>                           
+                           <li className="nav-item has-submenu">
+  <Link className="nav-link" to="/">Categories</Link>
+  <ul className="submenu">
+    {categoryMenu.map((cat, index) => (
+      <li className="has-submenu" key={index}>
+        <Link className="submenu-link" to={`/shop/category/${cat.category.id}/${cat.category.category_name}`}>
+          {cat.category.category_name}
+        </Link>
+        <ul className="submenu">
+          {cat.brand.map((brand, idx) => (
+            <li key={idx}>
+              <Link
+                className="submenu-link"
+                to={`/shop/category/${cat.category.id}/${cat.category.category_name}/${brand.id}/${brand.brand_name}`}
+              >
+                {brand.brand_name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </li>
+    ))}
+  </ul>
+</li>
+                
                         </ul>
                         <SearchBar
                             term={searchTerm}

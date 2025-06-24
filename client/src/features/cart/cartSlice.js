@@ -53,7 +53,6 @@ export const cartSlice = createSlice({
                 state.failedLoadingCart = false;
             })
             .addCase(loadCart.fulfilled, (state, action) => {
-                console.log(action.payload.cart);
                 state.isLoadingCart = false;
                 state.failedLoadingCart = false;
                 let itemsObj = {};

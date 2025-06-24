@@ -83,7 +83,6 @@ router.get('/session', (req, res, next) => {
     } 
     console.log("404");
     return res.status(404).send();
-    
 })
 
 

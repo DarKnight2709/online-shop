@@ -12,6 +12,7 @@ import './cartPage.css';
 export default function CartPage() {
     const dispatch = useDispatch();
     const cartItems = useSelector(selectCartItems);
+    console.log(cartItems);
     const cartTotal = useSelector(selectCartTotal);
     const isLoading = useSelector(isLoadingCart);
 
@@ -42,6 +43,7 @@ export default function CartPage() {
 
         //update quantityVals local state on every change
         setQuantityVals((prevState) => ({...prevState, [itemId]: value}));
+        console.log("change");
         
         //since timer state itemId is assigned product id, this prevents sending requests on every input change
         //avoids if previous timer is for other product

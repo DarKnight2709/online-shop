@@ -118,3 +118,17 @@ export const emptyCart = async() => {
         alert(e);
     }
 }
+
+
+
+
+
+export const fetchCategoriesWithBrands = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/api/brand/');
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        console.error('Failed to fetch category menu:', err);
+    }
+};
