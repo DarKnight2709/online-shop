@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { loadProducts, selectAllProducts } from "../../../features/productsList/productsListSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { fetchCategoriesWithBrands } from "../../../utils";
 import { button, useSearchParams } from "react-router-dom";
 
@@ -17,25 +17,13 @@ const ProductList = () => {
   const catId = searchParams.get('categoryId');
   const brandId = searchParams.get('brandId');
 
-  let dataObj = {};
+  // Sử dụng useMemo để tránh tính lại mỗi lần render:
 
-  if (catId && brandId) {
-    dataObj = {
-      type: 'category',
-      catId,
-      brandId,
-    }
-  } else if (catId && !brandId) {
-    dataObj = {
-      type: 'category',
-      catId,
-    }
-  } else {
-    dataObj = {
-      type: 'default'
-    }
-
-  }
+  const dataObj = useMemo(() => {
+    if (catId && brandId) return { type: 'category', catId, brandId };
+    if (catId) return { type: 'category', catId };
+    return { type: 'default' };
+  }, [catId, brandId]);
 
 
   const [editProduct, setEditProduct] = useState(null);
@@ -43,26 +31,30 @@ const ProductList = () => {
 
 
   const [categoriesWithBrands, setCategoriesWithBrands] = useState([]);
-  const [categoryIndex, setCategoryIndex] = useState(0);
-  const [category, setCategory] = useState('');
-  const [brand, setBrand] = useState('');
+
+  const [categoryFlag, setCategoryFlag] = useState(false);
 
 
+  const refreshData = () => {
+    dispatch(loadProducts(dataObj));
+    dispatch(loadCategories());
+    dispatch(loadBrands());
+  }
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const brands = useSelector(selectAllBrands);
   const categories = useSelector(selectAllCategories);
 
+
   console.log(categoriesWithBrands)
   useEffect(() => {
-    dispatch(loadProducts(dataObj));
-    dispatch(loadCategories());
-    dispatch(loadBrands());
+    refreshData();
     console.log("DFDFF")
-    const setMenu = async () => {
-      setCategoriesWithBrands(await fetchCategoriesWithBrands());
-    }
-    setMenu();
+    // const setMenu = async () => {
+    //   setCategoriesWithBrands(await fetchCategoriesWithBrands());
+    // }
+    // setMenu();
+    fetchCategoriesWithBrands().then(setCategoriesWithBrands);
   }, [dispatch, catId, brandId]);
 
   console.log(brands);
@@ -72,31 +64,64 @@ const ProductList = () => {
 
 
   const onHandleSaveEditProduct = async (prod) => {
-    setEditProduct(prod);
-    setShowEditForm(true);
+    // setEditProduct(prod);
+    // setShowEditForm(true);
+
+    console.log(prod);
     try {
-      // const endpoint = `http://localhost:5000/api/products/${prod.productid}`;
-      // const result = await fetch(
-      //   endpoint, {
-      //     method: 'PUT',
-      //     credentials: "include",
-      //     body: JSON.stringify({
-      //       productName: prod.productname,
-      //       description: prod.description,
-      //       price: prod.price,
-      //       quantityInStock: prod.quantityinstock,
-      //       imageURL: prod.imageurl,
-      //       brandName: prod.bran
+      const endpoint = `http://localhost:5000/api/products/${prod.productid}`;
+      const result = await fetch(
+        endpoint, {
+        method: 'PUT',
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productName: prod.productname,
+          description: prod.description,
+          price: prod.price,
+          quantityInStock: prod.quantityinstock,
+          imageURL: prod.imageurl,
+          brandName: prod.brand,
+          categoryName: prod.category
+        })
+      }
+      );
+      if (result.ok) {
+        alert('Edit successfully');
+        dispatch(loadProducts(dataObj));
+      } else {
+        alert('Edit failure');
+      }
 
-      //     })
-      //   }
-      // )
     } catch (error) {
-
+      console.error(error.message);
     }
+  }
 
+  const onHandleDeleteProduct = async (prod) => {
+    try {
+      const endpoint = `http://localhost:5000/api/products/${prod.productid}`;
+      const result = await fetch(
+        endpoint, {
+        method: 'DELETE',
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+      );
+      if (result.ok) {
+        alert('Delete successfully');
+        dispatch(loadProducts(dataObj));
+      } else {
+        alert('Delete failure');
+      }
 
-
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   return (
@@ -179,7 +204,9 @@ const ProductList = () => {
                     }
 
                   >Edit</button>
-                  <button className="btn btn--delete">Delete</button>
+                  <button className="btn btn--delete" onClick={
+                    () => { onHandleDeleteProduct(prod) }
+                  }>Delete</button>
 
                 </div>
               </td>
@@ -202,9 +229,9 @@ const ProductList = () => {
             </button>
             <h3>Edit Product</h3>
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
-                console.log("Updated Product:", editProduct);
+                await onHandleSaveEditProduct(editProduct);
                 setShowEditForm(false);
               }}
             >
@@ -254,25 +281,18 @@ const ProductList = () => {
 
               <label>
                 Category:
-                <select className="form__input" value={categoryIndex} onChange={(e) => {
-                  const index = Number(e.target.value);
-                  if (index === 0) {
-                    setCategory('');
-                    setCategoryIndex(0);
-                    setEditProduct({ ...editProduct, category: category })
-                    return;
+                <select className="form__input" value={editProduct.category} onChange={(e) => {
+                  setEditProduct({ ...editProduct, category: e.target.value });
+                  if (editProduct.category !== e.target.value) {
+                    setCategoryFlag(true);
                   }
-                  setCategory(categoriesWithBrands[index - 1].category.category_name);
-                  setCategoryIndex(index);
-                  if (category) {
-                    setEditProduct({ ...editProduct, category });
-                  }
+
                 }}>
-                  <option value={0}>{editProduct.category}</option>
+                  <option value={editProduct.category}>{editProduct.category}</option>
 
                   {categoriesWithBrands.filter((each) => each.category.category_name !== editProduct.category).map((each, index) => {
                     return (
-                      <option key={index} value={index + 1}>{each.category.category_name}</option>
+                      <option key={index} value={each.category.category_name}>{each.category.category_name}</option>
                     )
                   })}
                 </select>
@@ -280,24 +300,26 @@ const ProductList = () => {
 
               <label>
                 Brand:
-                {/* <input
-                  type="text"
-                  value={editProduct.brand}
-                  onChange={(e) =>
-                    setEditProduct({ ...editProduct, brand: e.target.value })
-                  }
-                /> */}
-                <select className="form__input" value={brand} onChange={(e) => {
-                  setBrand(e.target.value);
-                  setEditProduct({ ...editProduct, brand: brand})
-                  }}>
-                  <option value="">{editProduct.brand}</option>
+                <select className="form__input" value={categoryFlag ? '0' : editProduct.brand} onChange={(e) => {
+                  setEditProduct({ ...editProduct, brand: e.target.value })
+                  if (categoryFlag) setCategoryFlag(false);
+                }}>
+                  <option value={categoryFlag ? '0' : editProduct.brand}>{categoryFlag ? '--Select brand--' : editProduct.brand}</option>
 
-                  {categoriesWithBrands.length > 0 && categoriesWithBrands[categoryIndex === 0 ? 0 : categoryIndex - 1].brand.map((each, index) => {
-                    return (
-                      <option key={index} value={each.brand_name}> {each.brand_name}</option>
-                    )
-                  })}
+                  {categoriesWithBrands.length > 0 && categoryFlag
+                    ?
+                    categoriesWithBrands.filter((each) => each.category.category_name === editProduct.category
+                    )[0].brand.map((each, index) => {
+                      return (
+                        <option key={index} value={each.brand_name}> {each.brand_name}</option>
+                      )
+                    })
+                    : categoriesWithBrands.filter((each) => each.category.category_name === editProduct.category
+                    )[0].brand.filter((each) => each.brand_name !== editProduct.brand).map((each, index) => {
+                      return (
+                        <option key={index} value={each.brand_name}> {each.brand_name}</option>
+                      )
+                    })}
                 </select>
               </label>
 

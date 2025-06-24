@@ -142,24 +142,26 @@ const AddProductForm = () => {
             setCategory(categoriesWithBrands[index-1].category.category_name);
             setCategoryIndex(index);
           }}>
-          <option value={0}>Select Category</option>
+          <option value={0}>--Select Category--</option>
 
           {categoriesWithBrands.map((each, index) => {
             return (          
               <option key={index} value={index + 1}>{each.category.category_name}</option>
             )
           })}
+          <option value="add-category">+ Add a new category</option>
         </select>
 
         {/* Brand Dropdown */}
         <select className="form__input" value={brand} onChange={(e) => setBrand(e.target.value)}>
-          <option value="">Select Brand</option>
+          <option value="">--Select Brand--</option>
 
           {categoriesWithBrands.length > 0 && categoriesWithBrands[categoryIndex === 0 ? 0 : categoryIndex - 1].brand.map((each, index) => {
             return (          
               <option key={index} value={each.brand_name}> {each.brand_name}</option>
             )
           })}
+          <option value="add-brand">+ Add a new brand</option>
         </select>
 
         {/* Description */}
