@@ -1,0 +1,24 @@
+.product-page-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.filter-column {
+  width: 350px;
+  flex-shrink: 0;
+}
+
+.product-column {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .product-page-layout {
+    flex-direction: column;
+  }
+
+  .filter-column {
+    width: 100%;
+  }
+}

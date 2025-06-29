@@ -1,0 +1,36 @@
+{
+  "name": "online-shop",
+  "version": "1.0.0",
+  "description": "dự án web về website bán hàng thiết bị điện tử online",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DarKnight2709/online-shop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DarKnight2709/online-shop/issues"
+  },
+  "homepage": "https://github.com/DarKnight2709/online-shop#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "bootstrap": "^5.3.6",
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "express-validator": "^7.2.1",
+    "hbs": "^4.2.0",
+    "nodemon": "^3.1.10",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.16.0",
+    "recharts": "^3.0.2"
+  }
+}
