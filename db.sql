@@ -60,7 +60,6 @@ CREATE TABLE Orders_Products (
     orderID INT REFERENCES Orders(orderID) ON DELETE CASCADE,
     productID INT REFERENCES Products(productID) ON DELETE CASCADE,
     orderedQuantity INT NOT NULL,
-    unitPrice NUMERIC(10,2) NOT NULL,
     PRIMARY KEY (orderID, productID)
 );
 

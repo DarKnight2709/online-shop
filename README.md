@@ -6,13 +6,14 @@ Dự án web về website bán hàng thiết bị điện tử online
 ![ERD Diagram](/public/erd_diagram.png)
 
 ## 🗂️ Mô hình cơ sở dữ liệu
-- User: userID, username, passwordHash, email, address, phone, role
-- Order: orderID, orderDate, quantity, total, status, productID, userID  
-- Product: productID, productName, description, price, quantityInStock, imageURL, brandID, categoryID  
-- Cart: cartID, userID  
-- CartItem: cartItemID, quantity, price, cartID, productID  
-- Brand: brandID, name  
-- Category: categoryID, name  
+- User: <u>username</u>, passwordHash, email, address, phone, role
+- Order: <u> orderID</u>, orderDate, quantity, total, status, productID, userID  
+- Product: <u>productID</u>, productName, description, price, quantityInStock, imageURL, brandID, categoryID  
+- Orders_Products:  <u>orderID, productID</u>, orderedQuantity
+- Cart: <u>cartID</u>, userID  
+- CartItem: <u>cartItemID</u>, quantity, price, cartID, productID  
+- Brand: <u>brandID</u>, name  
+- Category: <u>categoryID</u>, name  
 
 ## ⚙️ Hướng dẫn cài đặt
 
