@@ -38,7 +38,7 @@ exports.addNewCategory = async (req, res, next) => {
     if (results.rows.length === 0) {
       throwError('Adding new Category Failed', 400);
     }
-    return res.status(201).send(`New Category ${req.body.category} added with id ${results.rows[0].categoryid}`);
+    return res.status(201).send(`New Category ${req.body.name} added with id ${results.rows[0].categoryid}`);
   } catch (error) {
     next(error);
   }

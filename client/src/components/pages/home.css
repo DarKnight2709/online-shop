@@ -3,3 +3,25 @@
   height: 400px; /* hoặc chiều cao bạn muốn */
   object-fit: cover; /* đảm bảo ảnh đầy khung mà không méo */
 }
+
+.banner-roller {
+  background: linear-gradient(180deg, #0d6efd, #084298);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.banner-roller:hover {
+  transform: translateY(-3px);
+}
+
+.banner-roller h4 {
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+}
+
+.banner-roller img {
+  max-height: 180px;
+  object-fit: cover;
+  width: 100%;
+}
+

@@ -11,6 +11,7 @@ export default function SearchPage(){
     const isLoading = useSelector(isLoadingProducts);
     const products = useSelector(selectAllProducts);
 
+    console.log(products);
     const sTerm = escape(searchParams.get('terms'));
     
     useEffect(() => {
@@ -19,9 +20,9 @@ export default function SearchPage(){
 
     return(
         <div className="container pt-5">
-            <h1 class="display-6">{`Search Results for "${sTerm}"`}</h1> 
+            <h1 className="display-6">{`Search Results for "${sTerm}"`}</h1> 
             {isLoading ? 'Loading Products' : 
-            <ProductsList itemArr={products}/>
+            <ProductsList itemArr={products} filters={{}}/>
             }           
         </div>
     );

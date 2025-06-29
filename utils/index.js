@@ -12,3 +12,11 @@ exports.throwError = (message, status) => {
     err.status = status;
     throw err;
 }
+
+// exports.sanitizeAdd = (addressObj) => {
+//     for(const item in addressObj){            
+//             addressObj[item] = escape(trim(addressObj[item]));        
+//     }
+//     return addressObj;
+// }
+

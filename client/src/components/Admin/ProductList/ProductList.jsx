@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { fetchCategoriesWithBrands } from "../../../utils";
 import { button, useSearchParams } from "react-router-dom";
 
+import formatVND from "../../../utils/formatCurrency";
+
 import './productList.css';
 import { loadBrands, selectAllBrands } from "../../../features/brand/brandsListSlice";
 import { loadCategories, selectAllCategories } from "../../../features/category/categoriesListSlice";
@@ -61,6 +63,7 @@ const ProductList = () => {
   console.log(categories);
   console.log(products);
 
+  console.log(categoriesWithBrands);
 
 
   const onHandleSaveEditProduct = async (prod) => {
@@ -123,234 +126,207 @@ const ProductList = () => {
       console.error(error.message);
     }
   }
+  console.log(categories);
+  console.log(editProduct);
 
   return (
     <section className="panel">
-      <h3 className="panel__title">Product List</h3>
-      <nav className="category-nav">
-        <ul className="category-list">
-          {categoriesWithBrands.map((cat, index) => (
-            <li className="category-item" key={index}>
-              <button
-                className="category-button"
-                onClick={() => {
-                  setSearchParams({
-                    categoryId: `${cat.category.id}`
-                  });
-                  document.activeElement?.blur();
-
-                }}
-              >
-                {cat.category.category_name}
-              </button>
-              <ul className="brand-submenu">
-                {cat.brand.map((brand, idx) => (
-                  <li key={idx}>
-                    <button
-                      className="brand-button"
-                      onClick={() => {
-                        setSearchParams({
-                          categoryId: `${cat.category.id}`,
-                          brandId: `${brand.id}`
-                        });
-                        document.activeElement?.blur();
-
-                      }}
-                    >
-                      {brand.brand_name}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <table className="table">
-        <thead>
-
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity in stock</th>
-            <th>Image</th>
-            <th>Category</th>
-            <th>Brand</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map(prod => (
-            <tr key={prod.productid}>
-              <td>{prod.productid}</td>
-              <td>{prod.productname}</td>
-              <td>${prod.price}</td>
-              <td>{prod.quantityinstock}</td>
-              <td><img src={prod.imageurl} alt="" /></td>
-              <td>{categories[prod.categoryid - 1]?.name || "N/A"}</td>
-              <td>{brands[prod.brandid - 1]?.name || "N/A"}</td>
-              <td className="description-cell"> {prod.description}</td>
-
-              <td>
-                <div className="action-buttons">
-                  <button className="btn btn--edit"
-                    onClick={
-                      () => {
-                        setEditProduct({ ...prod, brand: brands[prod.brandid - 1].name, category: categories[prod.categoryid - 1].name });
-                        setShowEditForm(true);
-                      }
-                    }
-
-                  >Edit</button>
-                  <button className="btn btn--delete" onClick={
-                    () => { onHandleDeleteProduct(prod) }
-                  }>Delete</button>
-
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {showEditForm && editProduct && (
-        <div className="modal-overlay" onClick={() => setShowEditForm(false)}>
-          <div
-            className="edit-form"
-            onClick={(e) => e.stopPropagation()}
+  <h3 className="panel__title">Danh sách sản phẩm</h3>
+  <nav className="category-nav">
+    <ul className="category-list">
+      {categoriesWithBrands.map((cat, index) => (
+        <li className="category-item" key={index}>
+          <button
+            className="category-button"
+            onClick={() => {
+              setSearchParams({
+                categoryId: `${cat.category.id}`
+              });
+              document.activeElement?.blur();
+            }}
           >
-            <button
-              className="close-button"
-              onClick={() => setShowEditForm(false)}
-              title="Close"
-            >
-              ×
-            </button>
-            <h3>Edit Product</h3>
-            <form
-              onSubmit={async (e) => {
-                e.preventDefault();
-                await onHandleSaveEditProduct(editProduct);
-                setShowEditForm(false);
+            {cat.category.category_name}
+          </button>
+          <ul className="brand-submenu">
+            {cat.brand.map((brand, idx) => (
+              <li key={idx}>
+                <button
+                  className="brand-button"
+                  onClick={() => {
+                    setSearchParams({
+                      categoryId: `${cat.category.id}`,
+                      brandId: `${brand.id}`
+                    });
+                    document.activeElement?.blur();
+                  }}
+                >
+                  {brand.brand_name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  </nav>
+  <table className="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Tồn kho</th>
+        <th>Hình ảnh</th>
+        <th>Danh mục</th>
+        <th>Thương hiệu</th>
+        <th>Mô tả</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      {products.map(prod => (
+        <tr key={prod.productid}>
+          <td>{prod.productid}</td>
+          <td>{prod.productname}</td>
+          <td>{formatVND(prod.price)}</td>
+          <td>{prod.quantityinstock}</td>
+          <td><img src={prod.imageurl} alt="" /></td>
+          <td>{categories.find((each) => each.categoryid === prod.categoryid)?.name || "Không rõ"}</td>
+          <td>{brands.find((each) => each.brandid === prod.brandid)?.name || "Không rõ"}</td>
+          <td className="description-cell">{prod.description}</td>
+          <td>
+            <div className="action-buttons">
+              <button className="btn btn--edit" onClick={() => {
+                setEditProduct({
+                  ...prod,
+                  brand: brands.find((each) => each.brandid === prod.brandid).name,
+                  category: categories.find((each) => each.categoryid === prod.categoryid).name
+                });
+                setShowEditForm(true);
+              }}>Sửa</button>
+              <button className="btn btn--delete" onClick={() => onHandleDeleteProduct(prod)}>Xóa</button>
+            </div>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  {showEditForm && editProduct && (
+    <div className="modal-overlay" onClick={() => setShowEditForm(false)}>
+      <div className="edit-form" onClick={(e) => e.stopPropagation()}>
+        <button className="close-button" onClick={() => setShowEditForm(false)} title="Đóng">×</button>
+        <h3>Sửa sản phẩm</h3>
+        <form onSubmit={async (e) => {
+          e.preventDefault();
+          await onHandleSaveEditProduct(editProduct);
+          setShowEditForm(false);
+        }}>
+          <label>
+            Tên:
+            <input
+              type="text"
+              value={editProduct.productname}
+              onChange={(e) => setEditProduct({ ...editProduct, productname: e.target.value })}
+            />
+          </label>
+
+          <label>
+            Giá:
+            <input
+              type="number"
+              value={editProduct.price}
+              onChange={(e) => setEditProduct({ ...editProduct, price: e.target.value })}
+            />
+          </label>
+
+          <label>
+            Tồn kho:
+            <input
+              type="number"
+              value={editProduct.quantityinstock}
+              onChange={(e) => setEditProduct({ ...editProduct, quantityinstock: e.target.value })}
+            />
+          </label>
+
+          <label>
+            Đường dẫn hình ảnh:
+            <input
+              type="text"
+              value={editProduct.imageurl}
+              onChange={(e) => setEditProduct({ ...editProduct, imageurl: e.target.value })}
+            />
+          </label>
+
+          <label>
+            Danh mục:
+            <select
+              className="form__input"
+              value={editProduct.category}
+              onChange={(e) => {
+                setEditProduct({ ...editProduct, category: e.target.value });
+                if (editProduct.category !== e.target.value) setCategoryFlag(true);
               }}
             >
-              <label>
-                Name:
-                <input
-                  type="text"
-                  value={editProduct.productname}
-                  onChange={(e) =>
-                    setEditProduct({ ...editProduct, productname: e.target.value })
-                  }
-                />
-              </label>
+              <option value={editProduct.category}>{editProduct.category}</option>
+              {categoriesWithBrands
+                .filter(each => each.category.category_name !== editProduct.category)
+                .map((each, index) => (
+                  <option key={index} value={each.category.category_name}>
+                    {each.category.category_name}
+                  </option>
+              ))}
+            </select>
+          </label>
 
-              <label>
-                Price:
-                <input
-                  type="number"
-                  value={editProduct.price}
-                  onChange={(e) =>
-                    setEditProduct({ ...editProduct, price: e.target.value })
-                  }
-                />
-              </label>
+          <label>
+            Thương hiệu:
+            <select
+              className="form__input"
+              value={categoryFlag ? '0' : editProduct.brand}
+              onChange={(e) => {
+                setEditProduct({ ...editProduct, brand: e.target.value });
+                if (categoryFlag) setCategoryFlag(false);
+              }}
+            >
+              <option value={categoryFlag ? '0' : editProduct.brand}>
+                {categoryFlag ? '--Chọn thương hiệu--' : editProduct.brand}
+              </option>
 
-              <label>
-                Quantity in Stock:
-                <input
-                  type="number"
-                  value={editProduct.quantityinstock}
-                  onChange={(e) =>
-                    setEditProduct({ ...editProduct, quantityinstock: e.target.value })
-                  }
-                />
-              </label>
+              {categoriesWithBrands.length > 0 && categoryFlag
+                ? categoriesWithBrands.find(each => each.category.category_name === editProduct.category)
+                    .brand.map((each, index) => (
+                      <option key={index} value={each.brand_name}>
+                        {each.brand_name}
+                      </option>
+                    ))
+                : categoriesWithBrands.find(each => each.category.category_name === editProduct.category)
+                    .brand.filter(each => each.brand_name !== editProduct.brand)
+                    .map((each, index) => (
+                      <option key={index} value={each.brand_name}>
+                        {each.brand_name}
+                      </option>
+                    ))}
+            </select>
+          </label>
 
-              <label>
-                Image URL:
-                <input
-                  type="text"
-                  value={editProduct.imageurl}
-                  onChange={(e) =>
-                    setEditProduct({ ...editProduct, imageurl: e.target.value })
-                  }
-                />
-              </label>
+          <label>
+            Mô tả:
+            <textarea
+              rows="3"
+              value={editProduct.description}
+              onChange={(e) => setEditProduct({ ...editProduct, description: e.target.value })}
+            />
+          </label>
 
-              <label>
-                Category:
-                <select className="form__input" value={editProduct.category} onChange={(e) => {
-                  setEditProduct({ ...editProduct, category: e.target.value });
-                  if (editProduct.category !== e.target.value) {
-                    setCategoryFlag(true);
-                  }
+          <button type="submit" className="btn btn--edit">Lưu</button>
+          <button type="button" className="btn btn--delete" onClick={() => setShowEditForm(false)}>Hủy</button>
+        </form>
+      </div>
+    </div>
+  )}
+</section>
 
-                }}>
-                  <option value={editProduct.category}>{editProduct.category}</option>
-
-                  {categoriesWithBrands.filter((each) => each.category.category_name !== editProduct.category).map((each, index) => {
-                    return (
-                      <option key={index} value={each.category.category_name}>{each.category.category_name}</option>
-                    )
-                  })}
-                </select>
-              </label>
-
-              <label>
-                Brand:
-                <select className="form__input" value={categoryFlag ? '0' : editProduct.brand} onChange={(e) => {
-                  setEditProduct({ ...editProduct, brand: e.target.value })
-                  if (categoryFlag) setCategoryFlag(false);
-                }}>
-                  <option value={categoryFlag ? '0' : editProduct.brand}>{categoryFlag ? '--Select brand--' : editProduct.brand}</option>
-
-                  {categoriesWithBrands.length > 0 && categoryFlag
-                    ?
-                    categoriesWithBrands.filter((each) => each.category.category_name === editProduct.category
-                    )[0].brand.map((each, index) => {
-                      return (
-                        <option key={index} value={each.brand_name}> {each.brand_name}</option>
-                      )
-                    })
-                    : categoriesWithBrands.filter((each) => each.category.category_name === editProduct.category
-                    )[0].brand.filter((each) => each.brand_name !== editProduct.brand).map((each, index) => {
-                      return (
-                        <option key={index} value={each.brand_name}> {each.brand_name}</option>
-                      )
-                    })}
-                </select>
-              </label>
-
-
-              <label>
-                Description:
-                <textarea
-                  rows="3"
-                  value={editProduct.description}
-                  onChange={(e) =>
-                    setEditProduct({ ...editProduct, description: e.target.value })
-                  }
-                />
-              </label>
-
-              <button type="submit" className="btn btn--edit">Save</button>
-              <button
-                type="button"
-                className="btn btn--delete"
-                onClick={() => setShowEditForm(false)}
-              >
-                Cancel
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-
-
-    </section>
   );
 };
 

@@ -10,8 +10,26 @@ exports.getProductById = async (productId) => await pool.query("SELECT * FROM Pr
 
 
 // search products by keyword
-exports.fetchProductSearch = async (keyword) => await pool.query("SELECT * FROM Products WHERE productName ILIKE $1", [`%${keyword}%`]);
-
+exports.fetchProductSearch = async (keyword) => {
+  const searchKeyword = `%${keyword}%`;
+  return await pool.query(
+    `
+    SELECT 
+      p.*, 
+      b.name AS brandName, 
+      c.name AS categoryName
+    FROM Products p
+    LEFT JOIN Brands b ON p.brandID = b.brandID
+    LEFT JOIN Category c ON p.categoryID = c.categoryID
+    WHERE 
+      p.productName ILIKE $1 OR
+      p.description ILIKE $1 OR
+      b.name ILIKE $1 OR
+      c.name ILIKE $1
+    `,
+    [searchKeyword]
+  );
+};
 
 // add new product
 exports.createNewProduct = async ({productName, description, priceTo, quantityInStockTo, imageURL, brandId, categoryId}) => {

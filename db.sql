@@ -50,12 +50,20 @@ CREATE TABLE Products (
 CREATE TABLE Orders (
     orderID SERIAL PRIMARY KEY,
     orderDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    quantity INT NOT NULL,
     total NUMERIC(10,2) NOT NULL,
     status VARCHAR(50) NOT NULL,
-    productID INT REFERENCES Products(productID) ON DELETE CASCADE,
     userID INT REFERENCES Users(userID) ON DELETE CASCADE
 );
+
+
+CREATE TABLE Orders_Products (
+    orderID INT REFERENCES Orders(orderID) ON DELETE CASCADE,
+    productID INT REFERENCES Products(productID) ON DELETE CASCADE,
+    orderedQuantity INT NOT NULL,
+    unitPrice NUMERIC(10,2) NOT NULL,
+    PRIMARY KEY (orderID, productID)
+);
+
 
 -- ========================
 -- 6. Bảng Cart

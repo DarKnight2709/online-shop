@@ -3,13 +3,11 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { receiveCurrent } from '../../../features/session/sessionSlice';
 
-
 const login = async (username, password) => {
   try {
     const res = await fetch('http://localhost:5000/api/auth/admin', {
       method: 'POST',
       credentials: 'include',
-
       headers: {
         'Content-Type': 'application/json',
       },
@@ -20,18 +18,16 @@ const login = async (username, password) => {
       success: res.ok,
       message: result.message
     }
-
   } catch (err) {
     console.log(err);
     return {
       success: false,
-      message: 'Network error. Please try again',
+      message: 'Lỗi mạng. Vui lòng thử lại.',
     }
   }
 }
 
 function Admin() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -39,8 +35,6 @@ function Admin() {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
-  // 'success' | 'danger'
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,15 +45,11 @@ function Admin() {
     setMessageType(result.success ? 'success' : 'danger');
 
     if (result.success) {
-      console.log('Login successful');
+      console.log('Đăng nhập thành công');
       // dispatch(receiveCurrent());
-      
       navigate('/admin/home');
-
-
     }
   };
-
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -71,24 +61,26 @@ function Admin() {
 
   return (
     <div className="col-sm-5 px-3">
-      <h2 className="display-6">Admin</h2>
+      <h2 className="display-6">Trang quản trị</h2>
       <form className="row g-3 mt-3" onSubmit={handleSubmit}>
-
         <div className="col-12">
-          <label htmlFor="loginUsername" className="form-label">Username</label>
+          <label htmlFor="loginUsername" className="form-label">Tên đăng nhập</label>
           <input type="text" className="form-control" id="loginUsername" value={username} onChange={handleUsernameChange} />
         </div>
+
         <div className="col-12">
-          <label htmlFor="loginPassword" className="form-label">Password</label>
+          <label htmlFor="loginPassword" className="form-label">Mật khẩu</label>
           <input type="password" className="form-control" id="loginPassword" value={password} onChange={handlePasswordChange} />
         </div>
+
         {message && (
           <div className={`alert alert-${messageType} text-center`} role="alert">
             {message}
           </div>
         )}
+
         <div className="col-12 mt-5">
-          <button type="submit" className="btn btn-dark text-uppercase rounded-0 px-5">Login</button>
+          <button type="submit" className="btn btn-dark text-uppercase rounded-0 px-5">Đăng nhập</button>
         </div>
       </form>
     </div>

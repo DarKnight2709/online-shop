@@ -9,7 +9,7 @@ import { loadProducts } from '../../../features/productsList/productsListSlice';
 
 
 
-const ProductPage = () => {
+const ProductAdminPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,4 +22,4 @@ const ProductPage = () => {
 }
 
 
-export default ProductPage;
+export default ProductAdminPage;

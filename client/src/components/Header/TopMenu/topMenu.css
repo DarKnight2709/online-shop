@@ -1,8 +1,87 @@
-.shop-secondary-menu li, .shop-secondary-menu a {
-    color: #fff;
-    font-size: 14px;
+/* ===== Style chung cho top menu ===== */
+.shop-secondary-menu {
+  padding: 0.4rem 0;
 }
 
-.shop-secondary-menu li a:link:active{
-    color: #febd69 !important;
+.shop-secondary-menu li,
+.shop-secondary-menu a {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.shop-secondary-menu li a:hover,
+.shop-secondary-menu .custom-icon:hover {
+  color: #febd69 !important;
+}
+
+.shop-secondary-menu li a:active {
+  color: #febd69 !important;
+}
+
+/* ===== ICON chung ===== */
+.custom-icon {
+  font-size: 20px;
+  color: #ffffff;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+/* Căn giữa icon */
+.icon-link,
+.user-dropdown .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 6px 12px;
+}
+
+/* ===== Dropdown menu user ===== */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0;
+  padding: 0.5rem 0;
+  background-color: #ffffff;
+  min-width: 180px;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.user-dropdown:hover .dropdown-menu,
+.user-dropdown .dropdown-menu:hover {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.user-dropdown .dropdown-item {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.user-dropdown .dropdown-item:hover {
+  background-color: #f2f2f2;
+  color: #0d6efd;
+}
+
+.user-dropdown .dropdown-item.text-danger:hover {
+  background-color: #f8d7da;
+  color: #dc3545;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { receiveCurrent } from '../../features/session/sessionSlice';
 
 const login = async (username, password) => {
@@ -24,19 +24,19 @@ const login = async (username, password) => {
     console.error(err);
     return {
       success: false,
-      message: 'Network error. Please try again.',
+      message: 'Lỗi mạng. Vui lòng thử lại.',
     };
   }
 };
 
 function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // tạo hàm để gửi action
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' | 'danger'
+  const [messageType, setMessageType] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -51,7 +51,6 @@ function Login() {
     setLoading(false);
 
     if (result.success) {
-      console.log('Login successful');
       dispatch(receiveCurrent());
       navigate('/');
     }
@@ -62,7 +61,7 @@ function Login() {
       <div className="card shadow-lg mx-auto" style={{ maxWidth: '500px' }}>
         <div className="card-body p-4">
           <h3 className="card-title text-center mb-4">
-            <i className="bi bi-box-arrow-in-right me-2"></i>Login
+            <i className="bi bi-box-arrow-in-right me-2"></i>Đăng nhập
           </h3>
 
           {message && (
@@ -73,7 +72,7 @@ function Login() {
 
           <form onSubmit={handleSubmit} noValidate>
             <div className="mb-3">
-              <label htmlFor="loginUsername" className="form-label">Username</label>
+              <label htmlFor="loginUsername" className="form-label">Tên người dùng</label>
               <input
                 type="text"
                 className="form-control"
@@ -81,12 +80,12 @@ function Login() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                placeholder="Enter your username"
+                placeholder="Nhập tên người dùng"
               />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="loginPassword" className="form-label">Password</label>
+              <label htmlFor="loginPassword" className="form-label">Mật khẩu</label>
               <input
                 type="password"
                 className="form-control"
@@ -94,7 +93,7 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Enter your password"
+                placeholder="Nhập mật khẩu"
               />
             </div>
 
@@ -103,20 +102,19 @@ function Login() {
                 {loading ? (
                   <>
                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                    Logging in...
+                    Đang đăng nhập...
                   </>
                 ) : (
-                  'Login'
+                  'Đăng nhập'
                 )}
               </button>
               <p className="text-center mt-3">
                 Chưa có tài khoản? <Link to="/register">Đăng ký</Link>
-            </p>
+              </p>
             </div>
           </form>
         </div>
       </div>
-      
     </div>
   );
 }

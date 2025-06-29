@@ -4,6 +4,9 @@ import singleProductReducer from "./features/singleProduct/singleProductSlice";
 import cartReducer from "./features/cart/cartSlice";
 import categoriesListReducer from "./features/category/categoriesListSlice.js";
 import brandsListReducer from "./features/brand/brandsListSlice.js";
+import  accountReducer  from "./features/account/accountSlice.js";
+import orderSlice   from "./features/order/orderSlice.js";
+import orderAdminSlice   from "./features/order/orderAdminSlice.js";
 
 const reducer = {
     session: sessionReducer,
@@ -11,7 +14,10 @@ const reducer = {
     singleProduct: singleProductReducer,  
     cart: cartReducer,
     categoriesList: categoriesListReducer,
-    brandsList: brandsListReducer
+    brandsList: brandsListReducer,
+    account: accountReducer,
+    orders: orderSlice,
+    ordersAdmin: orderAdminSlice,
 
 };
 
